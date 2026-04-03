@@ -13,8 +13,8 @@ dotenv.config();
 
 const app = express();
 const allowedOrigins = [
-  "https://app.com",
-  "https://admin.app.com",
+  "https://mini-library-kn492sf4z-huyhuy190804s-projects.vercel.app",
+  "https://mini-library-git-main-huyhuy190804s-projects.vercel.app",
   "http://localhost:3000"
 ];
 app.use(
