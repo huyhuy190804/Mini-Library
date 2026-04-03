@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import StatsData from '../../components/StatsData';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const StatsPage = () => {
   const [overview, setOverview] = useState({ totalBooks: 0, totalAuthors: 0, totalBorrowings: 0, currentlyBorrowed: 0 });

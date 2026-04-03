@@ -4,7 +4,7 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import BorrowingData from '../../components/BorrowingData';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_API_URL ;
 
 const BorrowingPage = () => {
   const [borrowings, setBorrowings] = useState([]);

@@ -4,7 +4,7 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import AuthorData from '../../components/AuthorData';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://project-management-xtdx.onrender.com';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AuthorPage = () => {
   const [authors, setAuthors] = useState([]);
