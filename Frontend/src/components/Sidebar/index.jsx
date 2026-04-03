@@ -1,7 +1,7 @@
-import { User, Library, RefreshCcw, BarChart2 } from "lucide-react";
+import { User, Library, RefreshCcw, BarChart2, X } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }) {
   const navItems = [
     { name: "Authors", icon: User, path: "/authors" },
     { name: "Books", icon: Library, path: "/books" },
@@ -10,49 +10,74 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="w-[280px] h-screen bg-[#f4f7fb] flex flex-col p-6 font-sans">
-      {/* Logo / Header */}
-      <div className="mb-8 px-2">
-        <h1 className="text-2xl font-bold text-[#0044cc] tracking-tight">Library Manager</h1>
-        <p className="text-sm text-gray-500 font-medium">Digital Curator</p>
-      </div>
+    <>
+      {/* Mobile Backdrop Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden transition-opacity"
+          onClick={onClose}
+        />
+      )}
 
-      {/* Navigation */}
-      <nav className="flex-1 flex flex-col gap-2">
-        {navItems.map((item) => (
-          <NavLink
-            key={item.name}
-            to={item.path}
-            className={({ isActive }) =>
-              isActive
-                ? "flex items-center gap-4 px-4 py-3.5 bg-[#eaf2ff] text-[#0044cc] border-2 border-black rounded-2xl shadow-[3px_3px_0px_0px_#0044cc] font-medium transition-all"
-                : "flex items-center gap-4 px-4 py-3.5 text-gray-700 hover:text-gray-900 hover:bg-black/5 rounded-2xl font-medium transition-all"
-            }
+      {/* Sidebar Content */}
+      <aside 
+        className={`fixed inset-y-0 left-0 z-50 w-[280px] bg-[#f4f7fb] flex flex-col p-6 font-sans transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 ${
+          isOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full"
+        }`}
+      >
+        {/* Logo / Header */}
+        <div className="flex items-center justify-between mb-8 px-2">
+          <div>
+            <h1 className="text-2xl font-bold text-[#0044cc] tracking-tight">Library Manager</h1>
+            <p className="text-sm text-gray-500 font-medium">Digital Curator</p>
+          </div>
+          {/* Mobile Close Button */}
+          <button 
+            onClick={onClose}
+            className="lg:hidden p-2 text-gray-500 hover:text-gray-900 rounded-full hover:bg-gray-200 transition-colors"
           >
-            {({ isActive }) => (
-              <>
-                <item.icon className={`w-5 h-5 ${isActive ? 'text-[#0044cc]' : 'text-gray-500'}`} strokeWidth={2.5} />
-                {item.name}
-              </>
-            )}
-          </NavLink>
-        ))}
-      </nav>
+            <X className="w-5 h-5" strokeWidth={2.5} />
+          </button>
+        </div>
 
-      {/* User Profile */}
-      <div className="mt-8 pt-6 border-t border-gray-200/60 flex items-center gap-3 px-2">
-        <div className="w-12 h-12 rounded-full overflow-hidden bg-[#0A192F] flex-shrink-0 shadow-sm border border-black/10">
-           <img 
-             src="https://api.dicebear.com/9.x/avataaars/svg?seed=Alex&backgroundColor=0a192f&skinColor=f8d25c&top=shortHairShortCurly" 
-             alt="Avatar" 
-             className="w-full h-full object-cover"
-           />
+        {/* Navigation */}
+        <nav className="flex-1 flex flex-col gap-2">
+          {navItems.map((item) => (
+            <NavLink
+              key={item.name}
+              to={item.path}
+              onClick={() => onClose?.()} // Auto-close on mobile when navigating
+              className={({ isActive }) =>
+                isActive
+                  ? "flex items-center gap-4 px-4 py-3.5 bg-[#eaf2ff] text-[#0044cc] border-2 border-black rounded-2xl shadow-[3px_3px_0px_0px_#0044cc] font-medium transition-all"
+                  : "flex items-center gap-4 px-4 py-3.5 text-gray-700 hover:text-gray-900 hover:bg-black/5 rounded-2xl font-medium transition-all"
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <item.icon className={`w-5 h-5 ${isActive ? 'text-[#0044cc]' : 'text-gray-500'}`} strokeWidth={2.5} />
+                  {item.name}
+                </>
+              )}
+            </NavLink>
+          ))}
+        </nav>
+
+        {/* User Profile */}
+        <div className="mt-8 pt-6 border-t border-gray-200/60 flex items-center gap-3 px-2">
+          <div className="w-12 h-12 rounded-full overflow-hidden bg-[#0A192F] flex-shrink-0 shadow-sm border border-black/10">
+             <img 
+               src="https://api.dicebear.com/9.x/avataaars/svg?seed=Alex&backgroundColor=0a192f&skinColor=f8d25c&top=shortHairShortCurly" 
+               alt="Avatar" 
+               className="w-full h-full object-cover"
+             />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-sm font-bold text-gray-900 leading-tight">Alex Curator</span>
+            <span className="text-xs text-gray-500 font-medium mt-0.5">Senior Librarian</span>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <span className="text-sm font-bold text-gray-900 leading-tight">Alex Curator</span>
-          <span className="text-xs text-gray-500 font-medium mt-0.5">Senior Librarian</span>
-        </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }

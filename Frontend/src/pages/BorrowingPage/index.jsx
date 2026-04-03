@@ -7,6 +7,7 @@ import BorrowingData from '../../components/BorrowingData';
 const API_URL = import.meta.env.VITE_API_URL ;
 
 const BorrowingPage = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [borrowings, setBorrowings] = useState([]);
   const [books, setBooks] = useState([]);
   const [stats, setStats] = useState({ totalLoans: 0, currentlyBorrowed: 0 });
@@ -108,10 +109,10 @@ const BorrowingPage = () => {
   };
 
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-1">
-        <Header />
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-auto">
+        <Header onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
         <BorrowingData
           borrowings={borrowings}
           books={books}

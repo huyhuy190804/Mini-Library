@@ -7,6 +7,7 @@ import BookData from '../../components/BookData';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const BookPage = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -97,10 +98,10 @@ const BookPage = () => {
   };
 
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-1">
-        <Header />
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-auto">
+        <Header onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
         <BookData
           books={books}
           authors={authors}

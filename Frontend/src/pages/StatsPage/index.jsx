@@ -6,6 +6,7 @@ import StatsData from '../../components/StatsData';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const StatsPage = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [overview, setOverview] = useState({ totalBooks: 0, totalAuthors: 0, totalBorrowings: 0, currentlyBorrowed: 0 });
   const [topBooks, setTopBooks] = useState([]);
   const [borrowStatus, setBorrowStatus] = useState({ returned: 0, borrowed: 0 });
@@ -74,10 +75,10 @@ const StatsPage = () => {
   };
 
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-1">
-        <Header />
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      <div className="flex-1 flex flex-col min-w-0 h-screen overflow-auto">
+        <Header onMenuToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
         <StatsData
           overview={overview}
           topBooks={topBooks}
